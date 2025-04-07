@@ -12,7 +12,7 @@ import { Observable, Subject, combineLatest, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
 import { HeroesService } from '../../../../core/services/heroes.service';
 import { Hero } from '../../../../core/models/hero.model';
-import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+// import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
