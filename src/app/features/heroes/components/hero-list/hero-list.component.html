@@ -26,7 +26,7 @@
   </section>
 
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="filteredHeroes()" class="w-full">
+    <table mat-table [dataSource]="paginatedHeroes()" class="w-full">
 
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -80,7 +80,8 @@
 
     <mat-paginator
       [pageSizeOptions]="[5, 10, 25]"
-      [pageSize]="pageSize"
+      [pageSize]="pageSize()"
+      [pageIndex]="pageIndex()"
       [length]="(totalHeroes()) || 0"
       showFirstLastButtons
       (page)="onPageChange($event)">

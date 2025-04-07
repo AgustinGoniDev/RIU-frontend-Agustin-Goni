@@ -36,9 +36,9 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
   //INJECTS
   private heroService = inject(HeroesService)
+  private router = inject(Router);
   private dialog: MatDialog = inject(MatDialog);
   private snackBar: MatSnackBar = inject(MatSnackBar);
-  private router: Router = inject(Router);
 
 
   searchControl = new FormControl('');
@@ -65,16 +65,16 @@ export class HeroListComponent implements OnInit, OnDestroy {
   });
 
   paginatedHeroes = computed(() => {
-    const start = this.pageIndex * this.pageSize;
-    const end = start + this.pageSize;
+    const start = this.pageIndex() * this.pageSize();
+    const end = start + this.pageSize();
     return this.filteredHeroes().slice(start, end);
   });
 
   totalHeroes = computed(() => this.filteredHeroes().length);
 
   displayedColumns: string[] = ['id', 'name', 'alterEgo', 'publisher', 'actions'];
-  pageSize = 5;
-  pageIndex = 0;
+  pageSize = signal(5);
+  pageIndex = signal(0);
 
 
   ngOnInit(): void { }
@@ -85,8 +85,8 @@ export class HeroListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(event: PageEvent): void {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
   }
 
   addHero(): void {
