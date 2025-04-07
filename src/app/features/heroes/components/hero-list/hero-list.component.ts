@@ -12,7 +12,7 @@ import { Observable, Subject, combineLatest, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
 import { HeroesService } from '../../../../core/services/heroes.service';
 import { Hero } from '../../../../core/models/hero.model';
-// import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -38,11 +38,9 @@ export class HeroListComponent implements OnInit, OnDestroy {
   heroes$!: Observable<Hero[]>;
   totalHeroes$!: Observable<number>;
 
-  // Paginación
   pageSize = 5;
   pageIndex = 0;
 
-  // Filtrado
   searchControl = new FormControl('');
 
   private destroy$ = new Subject<void>();
@@ -55,9 +53,9 @@ export class HeroListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // this.heroService.getHeroesChanges().subscribe(heroes => {
-    //   this.heroes$ = of(heroes);
-    // });
+    this.heroService.getHeroesChanges().subscribe(heroes => {
+      this.heroes$ = of(heroes);
+    });
 
 
     // Combinar filtro de búsqueda y paginación
@@ -74,17 +72,13 @@ export class HeroListComponent implements OnInit, OnDestroy {
       this.heroService.getHeroesChanges()
     ]).pipe(
       map(([search, heroes]) => {
-        // Filtrar por nombre
         const filteredHeroes = search
           ? heroes.filter(hero =>
               hero.name.toLowerCase().includes(search.toLowerCase())
             )
           : heroes;
 
-        // Calcular el total para la paginación
         this.totalHeroes$ = of(filteredHeroes.length);
-
-        // Aplicar paginación
         const start = this.pageIndex * this.pageSize;
         const end = start + this.pageSize;
 
