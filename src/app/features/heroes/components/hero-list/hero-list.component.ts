@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, inject, computed } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,12 +8,12 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, combineLatest, of } from 'rxjs';
+import { Observable, Subject} from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
 import { HeroesService } from '../../../../core/services/heroes.service';
 import { Hero } from '../../../../core/models/hero.model';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { AsyncPipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-hero-list',
@@ -27,65 +27,57 @@ import { AsyncPipe } from '@angular/common';
     MatDialogModule,
     MatSnackBarModule,
     FormsModule,
-    ReactiveFormsModule,
-    AsyncPipe
+    ReactiveFormsModule
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
 })
 export class HeroListComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['id', 'name', 'alterEgo', 'publisher', 'actions'];
-  heroes$!: Observable<Hero[]>;
-  totalHeroes$!: Observable<number>;
 
+  //INJECTS
+  private heroService = inject(HeroesService)
+  private dialog: MatDialog = inject(MatDialog);
+  private snackBar: MatSnackBar = inject(MatSnackBar);
+  private router: Router = inject(Router);
+
+
+  searchControl = new FormControl('');
+  private destroy$ = new Subject<void>();
+
+  private heroes = toSignal(this.heroService.getHeroesChanges(), { initialValue: [] });
+
+  private searchTerm = toSignal(
+    this.searchControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      distinctUntilChanged()
+    ),
+    { initialValue: '' }
+  );
+
+  filteredHeroes = computed(() => {
+    const search = this.searchTerm()!.toLowerCase();
+    const heroesList = this.heroes();
+
+    return search
+      ? heroesList.filter(hero => hero.name.toLowerCase().includes(search))
+      : heroesList;
+  });
+
+  paginatedHeroes = computed(() => {
+    const start = this.pageIndex * this.pageSize;
+    const end = start + this.pageSize;
+    return this.filteredHeroes().slice(start, end);
+  });
+
+  totalHeroes = computed(() => this.filteredHeroes().length);
+
+  displayedColumns: string[] = ['id', 'name', 'alterEgo', 'publisher', 'actions'];
   pageSize = 5;
   pageIndex = 0;
 
-  searchControl = new FormControl('');
 
-  private destroy$ = new Subject<void>();
-
-  constructor(
-    private heroService: HeroesService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.heroService.getHeroesChanges().subscribe(heroes => {
-      this.heroes$ = of(heroes);
-    });
-
-
-    // Combinar filtro de búsqueda y paginación
-    const filter$ = this.searchControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      distinctUntilChanged(),
-      map(search => search || '')
-    );
-
-    // Obtener la lista filtrada de héroes
-    this.heroes$ = combineLatest([
-      filter$,
-      this.heroService.getHeroesChanges()
-    ]).pipe(
-      map(([search, heroes]) => {
-        const filteredHeroes = search
-          ? heroes.filter(hero =>
-              hero.name.toLowerCase().includes(search.toLowerCase())
-            )
-          : heroes;
-
-        this.totalHeroes$ = of(filteredHeroes.length);
-        const start = this.pageIndex * this.pageSize;
-        const end = start + this.pageSize;
-
-        return filteredHeroes.slice(start, end);
-      })
-    );
-  }
+  ngOnInit(): void { }
 
   ngOnDestroy(): void {
     this.destroy$.next();
