@@ -8,5 +8,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'riu-frontend-challenge-agustin-goni';
+  title = 'RIU Frontend - Agustin Goñi';
 }
