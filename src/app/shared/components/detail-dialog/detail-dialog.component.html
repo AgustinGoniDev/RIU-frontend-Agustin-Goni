@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>{{ data.name }}</h2>
+    <mat-dialog-content>
+      <div class="image">
+        <img [src]="data.imageUrl" alt="">
+         <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/CABJ70.png/960px-CABJ70.png" alt=""> -->
+      </div>
+
+      <p>Alter Ego: {{ data.alterEgo }}</p>
+      <p>Editorial: {{ data.publisher }}</p>
+
+      <div class="abilietes">
+        <h3>Habilidades: </h3>
+        @for(ability of data.abilities; track data.id){
+          <ul>
+            <li>
+              {{ ability }}
+            </li>
+          </ul>
+        }
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button [mat-dialog-close]="false">
+        Cerrar
+      </button>
+    </mat-dialog-actions>

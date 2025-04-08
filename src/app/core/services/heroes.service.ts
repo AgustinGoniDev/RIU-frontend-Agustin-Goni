@@ -1,9 +1,10 @@
 
-import { Injectable } from '@angular/core';
+import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { delay, map, tap } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { Hero, HeroFilter } from '../models/hero.model';
 import { v4 as uuidv4 } from 'uuid';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +12,16 @@ import { v4 as uuidv4 } from 'uuid';
 export class HeroesService {
   private readonly NETWORK_DELAY = 500;
 
+  // private isBrowser: boolean; //TODO: variable para poder usar sessionStorage para mantener la info
+
   private heroes: Hero[] = [
     {
       id: '1',
       name: 'Superman',
       alterEgo: 'Clark Kent',
       publisher: 'DC Comics',
-      firstAppearance: 'Action Comics #1',
       abilities: ['Super strength', 'Flight', 'X-ray vision'],
-      imageUrl: 'assets/heroes/superman.jpg',
+      imageUrl: '../../../../../assets/superman.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -28,9 +30,8 @@ export class HeroesService {
       name: 'Spiderman',
       alterEgo: 'Peter Parker',
       publisher: 'Marvel Comics',
-      firstAppearance: 'Amazing Fantasy #15',
       abilities: ['Wall-crawling', 'Web-shooting', 'Spider sense'],
-      imageUrl: 'assets/heroes/spiderman.jpg',
+      imageUrl: '../../../../../assets/spiderman.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -39,9 +40,8 @@ export class HeroesService {
       name: 'Wonder Woman',
       alterEgo: 'Diana Prince',
       publisher: 'DC Comics',
-      firstAppearance: 'All Star Comics #8',
       abilities: ['Super strength', 'Flight', 'Combat expertise'],
-      imageUrl: 'assets/heroes/wonderwoman.jpg',
+      imageUrl: '../../../../../assets/wonderwoman.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -50,9 +50,8 @@ export class HeroesService {
       name: 'Batman',
       alterEgo: 'Bruce Wayne',
       publisher: 'DC Comics',
-      firstAppearance: 'Detective Comics #27',
       abilities: ['Intelligence', 'Combat expertise', 'Gadgets'],
-      imageUrl: 'assets/heroes/batman.jpg',
+      imageUrl: '../../../../../assets/batman.png',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -61,9 +60,8 @@ export class HeroesService {
       name: 'Iron Man',
       alterEgo: 'Tony Stark',
       publisher: 'Marvel Comics',
-      firstAppearance: 'Tales of Suspense #39',
       abilities: ['Power armor', 'Genius intellect', 'Wealth'],
-      imageUrl: 'assets/heroes/ironman.jpg',
+      imageUrl: '../../../../../assets/ironman.png',
       createdAt: new Date(),
       updatedAt: new Date()
     }
@@ -71,7 +69,19 @@ export class HeroesService {
 
   private heroesSubject = new BehaviorSubject<Hero[]>(this.heroes);
 
-  constructor() {}
+  // constructor(@Inject(PLATFORM_ID) platformId: Object) {
+  //   this.isBrowser = isPlatformBrowser(platformId);
+  // }
+
+  // updateHeroesStorage() {
+  //   if (!this.isBrowser) {
+  //     return;
+  //   } else {
+  //     sessionStorage.removeItem('heroes');
+  //     sessionStorage.setItem('heroes', JSON.stringify(this.heroes));
+  //     this.heroes = JSON.parse(sessionStorage.getItem('heroes')!);
+  //   }
+  // }
 
 
   getHeroes(): Observable<Hero[]> {
@@ -122,14 +132,14 @@ export class HeroesService {
   createHero(hero: Omit<Hero, 'id' | 'createdAt' | 'updatedAt'>): Observable<Hero> {
     const newHero: Hero = {
       ...hero,
-      id: uuidv4(),
+      id: uuidv4().split('-')[0],
       createdAt: new Date(),
       updatedAt: new Date()
     };
 
+    // this.updateHeroesStorage();
     this.heroes = [...this.heroes, newHero];
     this.heroesSubject.next(this.heroes);
-
     return of(newHero).pipe(
       delay(this.NETWORK_DELAY)
     );
@@ -157,6 +167,7 @@ export class HeroesService {
 
     this.heroesSubject.next(this.heroes);
 
+    // this.updateHeroesStorage();
     return of(updatedHero).pipe(
       delay(this.NETWORK_DELAY)
     );

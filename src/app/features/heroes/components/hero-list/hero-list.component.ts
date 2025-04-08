@@ -14,6 +14,7 @@ import { HeroesService } from '../../../../core/services/heroes.service';
 import { Hero } from '../../../../core/models/hero.model';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { DetailDialogComponent } from '../../../../shared/components/detail-dialog/detail-dialog.component';
 
 @Component({
   selector: 'app-hero-list',
@@ -125,6 +126,13 @@ export class HeroListComponent implements OnInit, OnDestroy {
           }
         });
       }
+    });
+  }
+
+  viewHero(hero: Hero): void {
+    const dialogRef = this.dialog.open(DetailDialogComponent, {
+      width: '350px',
+      data: hero
     });
   }
 }
