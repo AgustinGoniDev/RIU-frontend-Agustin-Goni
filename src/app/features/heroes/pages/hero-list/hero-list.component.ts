@@ -15,6 +15,7 @@ import { Hero } from '../../../../core/models/hero.model';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DetailDialogComponent } from '../../components/detail-dialog/detail-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-hero-list',
@@ -28,7 +29,8 @@ import { DetailDialogComponent } from '../../components/detail-dialog/detail-dia
     MatDialogModule,
     MatSnackBarModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss'
@@ -44,7 +46,10 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
   searchControl = new FormControl('');
   private destroy$ = new Subject<void>();
+  displayedColumns: string[] = ['id', 'name', 'alterEgo', 'publisher', 'actions'];
 
+  //SIGNALS
+  loading = signal(true);
   private heroes = toSignal(this.heroService.getHeroesChanges(), { initialValue: [] });
 
   private searchTerm = toSignal(
@@ -73,16 +78,36 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
   totalHeroes = computed(() => this.filteredHeroes().length);
 
-  displayedColumns: string[] = ['id', 'name', 'alterEgo', 'publisher', 'actions'];
   pageSize = signal(5);
   pageIndex = signal(0);
 
+  //METHODS
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.loadHeroes();
+  }
+
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  loadHeroes(): void {
+    this.loading.set(true);
+    this.heroService.getHeroes().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
+      next: () => this.loading.set(false),
+      error: (error) => {
+        this.loading.set(false);
+        this.snackBar.open('Error al cargar los superhéroes', 'Cerrar', {
+          duration: 5000,
+          panelClass: 'error-snackbar'
+        });
+        console.error('Error loading heroes:', error);
+      }
+    });
   }
 
   onPageChange(event: PageEvent): void {
