@@ -1,8 +1,7 @@
 <div class="container mx-auto p-4">
-  <h1 class="text-2xl font-bold mb-4">{{ isEditMode ? 'Editar' : 'Crear' }} Superhéroe</h1>
 
-  <form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <form class="hero-form" [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+    <div class="input-container">
 
       <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
@@ -61,7 +60,7 @@
       </mat-form-field>
     </div>
 
-    <div class="mt-6 flex justify-end gap-4">
+    <div class="mt-6 flex justify-start gap-4">
       <button
         mat-button
         type="button"
