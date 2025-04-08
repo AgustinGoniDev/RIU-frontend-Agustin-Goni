@@ -1,1 +1,91 @@
-<p>hero-detail-list works!</p>
+<div class="container">
+  <div class="header">
+
+    <section class="subheader">
+
+      <div class="mb-4">
+        <mat-form-field class="w-full">
+          <mat-label>Buscar superhéroe</mat-label>
+          <input
+            matInput
+            [formControl]="searchControl"
+            placeholder="Buscar por nombre">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="mb-4 flex justify-end">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addNewHero()">
+          <mat-icon>add</mat-icon>
+          Añadir nuevo héroe
+        </button>
+      </div>
+    </section>
+  </div>
+
+  @if(loading()){
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  }
+
+  @if(!loading() && filteredHeroes().length === 0){
+    <div class="no-results" >
+      <mat-icon>search_off</mat-icon>
+      <p>No se encontraron superhéroes</p>
+    </div>
+  }
+
+  <div class="card-grid" *ngIf="!loading() && filteredHeroes().length > 0">
+    @for(hero of displayedHeroes(); track hero.id){
+      <mat-card class="hero-card" >
+        <mat-card-header>
+          <mat-card-title>{{ hero.name }}</mat-card-title>
+          @if(hero.alterEgo){
+            <mat-card-subtitle>{{ hero.alterEgo }}</mat-card-subtitle>
+          }
+        </mat-card-header>
+
+        <img mat-card-image [src]="hero.imageUrl || '/assets/images/hero-placeholder.png'"
+             [alt]="hero.name" class="hero-image">
+
+        <mat-card-content>
+          <p><strong>Editorial:</strong> {{ hero.publisher || 'Desconocida' }}</p>
+
+          @if(hero.abilities && hero.abilities.length > 0){
+            <div class="abilities">
+              <p><strong>Habilidades:</strong></p>
+              <ul>
+                <li *ngFor="let ability of hero.abilities">{{ ability }}</li>
+              </ul>
+            </div>
+          }
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-icon-button color="accent" matTooltip="Editar" (click)="editHero(hero)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Eliminar" (click)="deleteHero(hero)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+
+  @if(totalHeroes() > 0){
+    <mat-paginator
+                  [length]="totalHeroes()"
+                  [pageSize]="pageSize()"
+                  [pageIndex]="pageIndex()"
+                  [pageSizeOptions]="[5, 10, 25, 50]"
+                  (page)="handlePageEvent($event)"
+                  showFirstLastButtons
+                  aria-label="Seleccionar página">
+    </mat-paginator>
+  }
+</div>
