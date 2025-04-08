@@ -71,9 +71,14 @@
     display: flex;
     align-items: center;
     gap: 0.5vh;
+    text-decoration: none;
+    color: #4e5158;
     &:hover{
       color: #005cbb;
       cursor: pointer;
+    }
+    &.active-link {
+      color: #005cbb;
     }
   }
   &.iconCentered {
@@ -97,11 +102,6 @@
 
     }
   }
-}
-
-.active-link {
-  background-color: rgba(63, 81, 181, 0.1);
-  color: #005cbb;
 }
 
 .toolbar-spacer {

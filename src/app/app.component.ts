@@ -1,5 +1,5 @@
 import { Component, inject, InjectionToken, ViewChild } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { LoadingComponent } from './shared/components/loading/loading.component';
@@ -13,7 +13,18 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule, MatButtonModule, LoadingComponent, MatSidenavModule, MatIcon, MatSidenavModule, MatTooltipModule, AsyncPipe],
+  imports: [
+    RouterOutlet,
+    MatToolbarModule,
+    MatButtonModule,
+    LoadingComponent,
+    MatSidenavModule,
+    MatIcon,
+    MatSidenavModule,
+    MatTooltipModule,
+    AsyncPipe,
+    RouterModule
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -51,10 +62,6 @@ export class AppComponent {
   toggleSidenav(): void {
     this.sidenavOpened = !this.sidenavOpened;
     console.log(this.sidenavOpened);
-  }
-
-  navigateTo(route: string): void {
-    this.router.navigate([route]);
   }
 
   logout(): void {

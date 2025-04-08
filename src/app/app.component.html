@@ -10,13 +10,19 @@
       </div>
 
       <div class="sidenav-list" [class.iconCentered]="!sidenavOpened">
-        <a mat-list-item routerLinkActive="active-link" (click)="navigateTo('heroes/table-view')">
+        <a mat-list-item
+          routerLink="/heroes/table-view"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon matTooltip="Lista de superhéroes" matListItemIcon>view_list</mat-icon>
           @if(sidenavOpened){
             <span matListItemTitle>Lista de superhéroes</span>
           }
         </a>
-        <a mat-list-item routerLinkActive="active-link" (click)="navigateTo('heroes/card-view')">
+        <a mat-list-item
+          routerLink="/heroes/card-view"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon matTooltip="Vista en detalle" matListItemIcon>dashboard</mat-icon>
           @if(sidenavOpened){
             <span matListItemTitle>Vista en detalle</span>
