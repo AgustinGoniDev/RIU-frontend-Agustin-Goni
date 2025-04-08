@@ -12,7 +12,7 @@ import { HeroesService } from '../../../../core/services/heroes.service';
 import { Hero } from '../../../../core/models/hero.model';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 // import { UppercaseDirective } from '../../directives/uppercase.directive';
 
@@ -27,7 +27,6 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
     MatChipsModule,
     FormsModule,
     MatIcon,
-    NgIf,
     NgFor
     // UppercaseDirective
   ],

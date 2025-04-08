@@ -11,9 +11,11 @@
           placeholder="Nombre del superhéroe"
           appUppercase
           required>
-        <mat-error *ngIf="heroForm.get('name')?.errors?.['required']">
-          El nombre es obligatorio
-        </mat-error>
+          @if(heroForm.get('name')?.errors?.['required']){
+            <mat-error>
+              El nombre es obligatorio
+            </mat-error>
+          }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
