@@ -5,18 +5,20 @@ import { delay, map } from 'rxjs/operators';
 import { Hero, HeroFilter } from '../models/hero.model';
 import { v4 as uuidv4 } from 'uuid';
 import { isPlatformBrowser } from '@angular/common';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroesService {
   private readonly NETWORK_DELAY = 500;
+  private readonly STORAGE_KEY = 'heroesData';
 
-  // private isBrowser: boolean; //TODO: variable para poder usar sessionStorage para mantener la info
+  private storage = inject(LocalStorageService);
 
   private heroes: Hero[] = [
     {
-      id: '1',
+      id: uuidv4().split('-')[0],
       name: 'Superman',
       alterEgo: 'Clark Kent',
       publisher: 'DC Comics',
@@ -26,7 +28,7 @@ export class HeroesService {
       updatedAt: new Date()
     },
     {
-      id: '2',
+      id: uuidv4().split('-')[0],
       name: 'Spiderman',
       alterEgo: 'Peter Parker',
       publisher: 'Marvel Comics',
@@ -36,7 +38,7 @@ export class HeroesService {
       updatedAt: new Date()
     },
     {
-      id: '3',
+      id: uuidv4().split('-')[0],
       name: 'Wonder Woman',
       alterEgo: 'Diana Prince',
       publisher: 'DC Comics',
@@ -46,7 +48,7 @@ export class HeroesService {
       updatedAt: new Date()
     },
     {
-      id: '4',
+      id: uuidv4().split('-')[0],
       name: 'Batman',
       alterEgo: 'Bruce Wayne',
       publisher: 'DC Comics',
@@ -56,7 +58,7 @@ export class HeroesService {
       updatedAt: new Date()
     },
     {
-      id: '5',
+      id: uuidv4().split('-')[0],
       name: 'Iron Man',
       alterEgo: 'Tony Stark',
       publisher: 'Marvel Comics',
@@ -69,19 +71,25 @@ export class HeroesService {
 
   private heroesSubject = new BehaviorSubject<Hero[]>(this.heroes);
 
-  // constructor(@Inject(PLATFORM_ID) platformId: Object) {
-  //   this.isBrowser = isPlatformBrowser(platformId);
-  // }
+  constructor() {
+    const storedHeroes = this.storage.getItem<Hero[]>(this.STORAGE_KEY);
+    if (storedHeroes) {
+      this.heroes = storedHeroes;
+    } else {
+      this.heroes = this.getDefaultHeroes();
+      this.updateStorage();
+    }
 
-  // updateHeroesStorage() {
-  //   if (!this.isBrowser) {
-  //     return;
-  //   } else {
-  //     sessionStorage.removeItem('heroes');
-  //     sessionStorage.setItem('heroes', JSON.stringify(this.heroes));
-  //     this.heroes = JSON.parse(sessionStorage.getItem('heroes')!);
-  //   }
-  // }
+    this.heroesSubject.next(this.heroes);
+  }
+
+  private updateStorage(): void {
+    this.storage.setItem(this.STORAGE_KEY, this.heroes);
+  }
+
+  getDefaultHeroes(): Hero[] {
+    return this.heroes;
+  }
 
 
   getHeroes(): Observable<Hero[]> {
@@ -137,8 +145,8 @@ export class HeroesService {
       updatedAt: new Date()
     };
 
-    // this.updateHeroesStorage();
     this.heroes = [...this.heroes, newHero];
+    this.updateStorage();
     this.heroesSubject.next(this.heroes);
     return of(newHero).pipe(
       delay(this.NETWORK_DELAY)
@@ -165,9 +173,9 @@ export class HeroesService {
       ...this.heroes.slice(index + 1)
     ];
 
+    this.updateStorage();
     this.heroesSubject.next(this.heroes);
 
-    // this.updateHeroesStorage();
     return of(updatedHero).pipe(
       delay(this.NETWORK_DELAY)
     );
@@ -186,6 +194,7 @@ export class HeroesService {
       ...this.heroes.slice(index + 1)
     ];
 
+    this.updateStorage();
     this.heroesSubject.next(this.heroes);
 
     return of(true).pipe(
