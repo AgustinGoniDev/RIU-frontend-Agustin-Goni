@@ -1,8 +1,7 @@
-import { Component, inject, InjectionToken, ViewChild } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Component, inject, ViewChild } from '@angular/core';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { LoadingComponent } from './shared/components/loading/loading.component';
 import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 import { MatIcon } from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -17,7 +16,6 @@ import { AsyncPipe } from '@angular/common';
     RouterOutlet,
     MatToolbarModule,
     MatButtonModule,
-    LoadingComponent,
     MatSidenavModule,
     MatIcon,
     MatSidenavModule,
@@ -34,7 +32,6 @@ export class AppComponent {
 
   //INJECTS
   private window = inject(WINDOW);
-  private router = inject(Router);
   private sharedSrv = inject(SharedService);
 
   sectionTitle$ = this.sharedSrv.title$;
