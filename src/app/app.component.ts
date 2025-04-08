@@ -1,36 +1,39 @@
 import { Component, inject, InjectionToken, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { LoadingComponent } from './shared/components/loading/loading.component';
 import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 import { MatIcon } from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
-export const WINDOW = new InjectionToken<Window>('WindowToken', {
-  factory: () => {
-    if(typeof window !== 'undefined') {
-      return window
-    }
-    return new Window();
-  }
-});
+import { WINDOW } from './shared/utils/tokens.utils';
+import { SharedService } from './shared/services/shared.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule, MatButtonModule, LoadingComponent, MatSidenavModule, MatIcon, MatSidenavModule, MatTooltipModule],
+  imports: [RouterOutlet, MatToolbarModule, MatButtonModule, LoadingComponent, MatSidenavModule, MatIcon, MatSidenavModule, MatTooltipModule, AsyncPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 
 export class AppComponent {
-  private window = inject(WINDOW);
   title = 'RIU Frontend - Agustin Goñi';
+
+  //INJECTS
+  private window = inject(WINDOW);
+  private router = inject(Router);
+  private sharedSrv = inject(SharedService);
+
+  sectionTitle$ = this.sharedSrv.title$;
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
   sidenavOpened = true;
 
+  constructor() {
+
+  }
 
   ngOnInit(): void {
     this.checkScreenSize();
@@ -48,7 +51,10 @@ export class AppComponent {
   toggleSidenav(): void {
     this.sidenavOpened = !this.sidenavOpened;
     console.log(this.sidenavOpened);
+  }
 
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
   }
 
   logout(): void {

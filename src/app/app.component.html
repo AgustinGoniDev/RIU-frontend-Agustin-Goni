@@ -10,13 +10,13 @@
       </div>
 
       <div class="sidenav-list" [class.iconCentered]="!sidenavOpened">
-        <a mat-list-item routerLink="/heroes" routerLinkActive="active-link">
+        <a mat-list-item routerLinkActive="active-link" (click)="navigateTo('heroes/table-view')">
           <mat-icon matTooltip="Lista de superhéroes" matListItemIcon>view_list</mat-icon>
           @if(sidenavOpened){
             <span matListItemTitle>Lista de superhéroes</span>
           }
         </a>
-        <a mat-list-item routerLink="/heroes" routerLinkActive="active-link">
+        <a mat-list-item routerLinkActive="active-link" (click)="navigateTo('heroes/card-view')">
           <mat-icon matTooltip="Vista en detalle" matListItemIcon>dashboard</mat-icon>
           @if(sidenavOpened){
             <span matListItemTitle>Vista en detalle</span>
@@ -40,7 +40,7 @@
   <!-- <mat-sidenav-content [class]="sidenavOpened ? 'side-expanded' : 'side-collapsed'"> -->
     <mat-sidenav-content [class]="sidenavOpened ? 'side-expanded' : 'side-collapsed'">
     <mat-toolbar color="primary" >
-      <span class="title-app">Superheroes App</span>
+      <span class="title-app">{{sectionTitle$ | async}}</span>
       <span class="toolbar-spacer"></span>
       <button mat-icon-button>
         <mat-icon>account_circle</mat-icon>

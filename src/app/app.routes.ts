@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'heroes',
+    redirectTo: 'heroes/table-view',
     pathMatch: 'full'
   },
   {
@@ -11,8 +11,4 @@ export const routes: Routes = [
     loadChildren: () => import('./features/heroes/heroes.routes')
       .then(m => m.HEROES_ROUTES)
   },
-  {
-    path: '**',
-    redirectTo: 'heroes'
-  }
 ];
