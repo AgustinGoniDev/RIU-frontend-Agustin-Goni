@@ -41,6 +41,9 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   height: 10vh;
   width: 100%;
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .logo {
@@ -72,6 +75,9 @@
       color: #005cbb;
       cursor: pointer;
     }
+  }
+  &.iconCentered {
+    align-items: center;
   }
 }
 
