@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { Hero } from '../../../core/models/hero.model';
+import { Hero } from '../../../../core/models/hero.model';
 
 
 @Component({

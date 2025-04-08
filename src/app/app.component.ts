@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { LoadingComponent } from './shared/components/loading/loading.component';
 import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 import { MatIcon } from '@angular/material/icon';
-import { NgIf } from '@angular/common';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 export const WINDOW = new InjectionToken<Window>('WindowToken', {
   factory: () => {
@@ -19,7 +19,7 @@ export const WINDOW = new InjectionToken<Window>('WindowToken', {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule, MatButtonModule, LoadingComponent, MatSidenavModule, MatIcon, MatSidenavModule, NgIf, ],
+  imports: [RouterOutlet, MatToolbarModule, MatButtonModule, LoadingComponent, MatSidenavModule, MatIcon, MatSidenavModule, MatTooltipModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

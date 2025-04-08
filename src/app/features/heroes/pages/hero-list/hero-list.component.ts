@@ -14,7 +14,7 @@ import { HeroesService } from '../../../../core/services/heroes.service';
 import { Hero } from '../../../../core/models/hero.model';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { DetailDialogComponent } from '../../../../shared/components/detail-dialog/detail-dialog.component';
+import { DetailDialogComponent } from '../../components/detail-dialog/detail-dialog.component';
 
 @Component({
   selector: 'app-hero-list',
