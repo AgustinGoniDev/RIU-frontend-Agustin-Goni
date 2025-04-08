@@ -3,7 +3,6 @@ export interface Hero {
   name: string;
   alterEgo?: string;
   publisher?: string;
-  firstAppearance?: string;
   abilities?: string[];
   imageUrl?: string;
   createdAt: Date;

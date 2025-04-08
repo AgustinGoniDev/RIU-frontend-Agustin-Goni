@@ -3,7 +3,7 @@
 
   <form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <!-- Nombre -->
+
       <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
         <input
@@ -17,7 +17,6 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- Alter Ego -->
       <mat-form-field appearance="outline">
         <mat-label>Alter Ego</mat-label>
         <input
@@ -26,7 +25,6 @@
           placeholder="Identidad secreta">
       </mat-form-field>
 
-      <!-- Editorial -->
       <mat-form-field appearance="outline">
         <mat-label>Editorial</mat-label>
         <input
@@ -35,16 +33,6 @@
           placeholder="Editorial">
       </mat-form-field>
 
-      <!-- Primera aparición -->
-      <mat-form-field appearance="outline">
-        <mat-label>Primera aparición</mat-label>
-        <input
-          matInput
-          formControlName="firstAppearance"
-          placeholder="Primera aparición">
-      </mat-form-field>
-
-      <!-- URL de imagen -->
       <mat-form-field appearance="outline" class="col-span-full">
         <mat-label>URL de imagen</mat-label>
         <input
@@ -53,7 +41,6 @@
           placeholder="URL de la imagen">
       </mat-form-field>
 
-      <!-- Habilidades (Chips) -->
       <mat-form-field appearance="outline" class="col-span-full">
         <mat-label>Habilidades</mat-label>
         <mat-chip-grid #chipGrid formControlName="abilities">

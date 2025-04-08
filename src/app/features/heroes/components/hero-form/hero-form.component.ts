@@ -5,7 +5,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -14,6 +13,7 @@ import { Hero } from '../../../../core/models/hero.model';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { NgFor, NgIf } from '@angular/common';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
 // import { UppercaseDirective } from '../../directives/uppercase.directive';
 
 @Component({
@@ -35,8 +35,6 @@ import { NgFor, NgIf } from '@angular/common';
   styleUrl: './hero-form.component.scss'
 })
 export class HeroFormComponent implements OnInit, OnDestroy {
-  // heroForm!: any;
-
   heroForm!: FormGroup;
   isEditMode = false;
   heroId = '';
@@ -95,7 +93,6 @@ export class HeroFormComponent implements OnInit, OnDestroy {
           name: hero.name,
           alterEgo: hero.alterEgo,
           publisher: hero.publisher,
-          firstAppearance: hero.firstAppearance,
           imageUrl: hero.imageUrl
         });
 
@@ -140,7 +137,6 @@ export class HeroFormComponent implements OnInit, OnDestroy {
       name: formValue.name,
       alterEgo: formValue.alterEgo,
       publisher: formValue.publisher,
-      firstAppearance: formValue.firstAppearance,
       imageUrl: formValue.imageUrl,
       abilities: this.abilities
     };
