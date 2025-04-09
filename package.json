@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:ssr": "ng build && ng run heroes-app:server",
+    "build:ssr": "ng build && ng run riu-frontend-challenge-agustin-goni:server",
     "serve:ssr:riu-frontend-challenge-agustin-goni": "node dist/riu-frontend-challenge-agustin-goni/server/server.mjs"
   },
   "private": true,
