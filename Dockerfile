@@ -1,7 +1,7 @@
 ### STAGE 1: Build ###
 FROM node:20-alpine AS build
 WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
+COPY package.json pnpm-lock.yaml ./
 RUN npm install
 COPY . .
 RUN npm run build:ssr
@@ -10,7 +10,7 @@ RUN npm run build:ssr
 FROM node:20-alpine
 WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/dist /usr/src/app/dist
-COPY --from=build /usr/src/app/package.json /usr/src/app/package.json
+COPY --from=build /usr/src/app/package.json /usr/src/app/pnpm-lock.yaml
 RUN npm install --production
 
 EXPOSE 4000
