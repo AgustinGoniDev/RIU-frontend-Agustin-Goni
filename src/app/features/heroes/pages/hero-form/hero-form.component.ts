@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatIcon } from '@angular/material/icon';
 import { NgFor } from '@angular/common';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
-// import { UppercaseDirective } from '../../directives/uppercase.directive';
+import { UpperCaseDirective } from '../../directives/upper-case.directive';
 
 @Component({
   selector: 'app-hero-form',
@@ -27,8 +27,8 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
     MatChipsModule,
     FormsModule,
     MatIcon,
-    NgFor
-    // UppercaseDirective
+    NgFor,
+    UpperCaseDirective
   ],
   templateUrl: './hero-form.component.html',
   styleUrl: './hero-form.component.scss'
