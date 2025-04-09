@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -38,18 +38,19 @@ export class HeroFormComponent implements OnInit, OnDestroy {
   isEditMode = false;
   heroId = '';
   abilities: string[] = [];
-
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
+
 
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private fb: FormBuilder,
-    private heroService: HeroesService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
+  //INJECTS
+  private fb = inject(FormBuilder);
+  private heroService = inject(HeroesService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.initForm();
@@ -77,7 +78,6 @@ export class HeroFormComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required]],
       alterEgo: [''],
       publisher: [''],
-      firstAppearance: [''],
       imageUrl: [''],
       abilities: [[]]
     });

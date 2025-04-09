@@ -18,7 +18,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Hero } from '../../../../core/models/hero.model';
 import { HeroesService } from '../../../../core/services/heroes.service';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-hero-detail-list',
@@ -35,7 +34,6 @@ import { LoadingComponent } from '../../../../shared/components/loading/loading.
     MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
-    LoadingComponent
   ],
   templateUrl: './hero-detail-list.component.html',
   styleUrl: './hero-detail-list.component.scss'
@@ -104,7 +102,7 @@ export class HeroDetailListComponent implements OnInit, OnDestroy {
     this.heroService.getHeroes().pipe(
       takeUntil(this.destroy$)
     ).subscribe({
-      next: () => this.loading.set(false),
+      next: () => this.loading.set(false),//Aca deberia actualizar la informacion, pero actualmente se maneja con observable desde el servicio.
       error: (error) => {
         this.loading.set(false);
         this.snackBar.open('Error al cargar los superhéroes', 'Cerrar', {

@@ -1,4 +1,4 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
@@ -6,9 +6,10 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class LocalStorageService {
   private isBrowser: boolean;
+  platformId = inject(PLATFORM_ID);
 
-  constructor(@Inject(PLATFORM_ID) platformId: Object) {
-    this.isBrowser = isPlatformBrowser(platformId);
+  constructor() {
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   setItem<T>(key: string, value: T): void {

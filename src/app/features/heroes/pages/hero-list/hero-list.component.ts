@@ -8,7 +8,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject} from 'rxjs';
+import { Subject} from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
 import { HeroesService } from '../../../../core/services/heroes.service';
 import { Hero } from '../../../../core/models/hero.model';
@@ -40,8 +40,8 @@ export class HeroListComponent implements OnInit, OnDestroy {
   //INJECTS
   private heroService = inject(HeroesService)
   private router = inject(Router);
-  private dialog: MatDialog = inject(MatDialog);
-  private snackBar: MatSnackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
 
 
   searchControl = new FormControl('');
@@ -81,7 +81,6 @@ export class HeroListComponent implements OnInit, OnDestroy {
   pageSize = signal(5);
   pageIndex = signal(0);
 
-  //METHODS
 
   ngOnInit(): void {
     this.loadHeroes();
