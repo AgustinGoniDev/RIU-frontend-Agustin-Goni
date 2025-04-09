@@ -111,31 +111,6 @@ export class HeroesService {
   }
 
 
-  // filterHeroes(filter: HeroFilter): Observable<Hero[]> {
-  //   return of([...this.heroes]).pipe(
-  //     map(heroes => {
-  //       let filteredHeroes = heroes;
-
-
-  //       if (filter.name) {
-  //         filteredHeroes = filteredHeroes.filter(hero =>
-  //           hero.name.toLowerCase().includes(filter.name!.toLowerCase())
-  //         );
-  //       }
-
-
-  //       if (filter.page !== undefined && filter.limit !== undefined) {
-  //         const startIndex = filter.page * filter.limit;
-  //         filteredHeroes = filteredHeroes.slice(startIndex, startIndex + filter.limit);
-  //       }
-
-  //       return filteredHeroes;
-  //     }),
-  //     delay(this.NETWORK_DELAY)
-  //   );
-  // }
-
-
   createHero(hero: Omit<Hero, 'id' | 'createdAt' | 'updatedAt'>): Observable<Hero> {
     const newHero: Hero = {
       ...hero,
