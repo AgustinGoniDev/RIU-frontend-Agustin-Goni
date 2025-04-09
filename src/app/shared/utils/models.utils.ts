@@ -6,3 +6,10 @@ export const HERO_TITLES: Record<HeroView, string> = {
   'new': 'Crear héroe',
   'edit': 'Editar héroe'
 };
+
+export interface ConfirmDialogData {
+  title: string;
+  message: string;
+  confirmText: string;
+  cancelText: string;
+}
