@@ -5,8 +5,8 @@ export interface Hero {
   publisher?: string;
   abilities?: string[];
   imageUrl?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface HeroFilter {

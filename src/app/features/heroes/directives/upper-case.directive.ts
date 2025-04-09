@@ -12,5 +12,9 @@ export class UpperCaseDirective {
   onInput(value: string): void {
     const uppercased = value.toUpperCase();
     this.control.control?.setValue(uppercased, { emitEvent: false });
+
+    if (this.control && this.control.control) {
+      this.control.control.setValue(uppercased, { emitEvent: false });
+    }
   }
 }

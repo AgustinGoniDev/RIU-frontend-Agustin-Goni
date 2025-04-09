@@ -151,11 +151,13 @@ export class HeroDetailListComponent implements OnInit, OnDestroy {
             this.snackBar.open(`Superhéroe ${hero.name} eliminado con éxito`, 'Cerrar', {
               duration: 3000
             });
+            this.loading.set(false);
           },
           error: (error) => {
             this.snackBar.open(`Error al eliminar superhéroe: ${error.message}`, 'Cerrar', {
               duration: 3000
             });
+            this.loading.set(false);
           }
         });
       }

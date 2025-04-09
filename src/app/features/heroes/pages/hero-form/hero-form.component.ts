@@ -55,7 +55,6 @@ export class HeroFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initForm();
 
-    // Verificar si estamos en modo edición
     this.route.params.pipe(
       takeUntil(this.destroy$)
     ).subscribe(params => {

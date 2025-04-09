@@ -28,7 +28,7 @@ import { AsyncPipe } from '@angular/common';
 })
 
 export class AppComponent {
-  title = 'RIU Frontend - Agustin Goñi';
+  // title = 'RIU Frontend - Agustin Goñi';
 
   //INJECTS
   private window = inject(WINDOW);

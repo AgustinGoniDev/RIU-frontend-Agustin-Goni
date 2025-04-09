@@ -5,7 +5,9 @@ import { By } from '@angular/platform-browser';
 import { UpperCaseDirective } from './upper-case.directive';
 
 @Component({
-  template: `<input [formControl]="control" appUppercase>`
+  selector: 'app-test',
+  template: `<input [formControl]="control" appUpperCase>`,
+  imports: [ReactiveFormsModule, UpperCaseDirective],
 })
 class TestComponent {
   control = new FormControl('');
@@ -17,8 +19,7 @@ describe('UppercaseDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TestComponent, UpperCaseDirective],
-      imports: [ReactiveFormsModule, FormsModule]
+      imports: [ReactiveFormsModule, FormsModule, UpperCaseDirective]
     });
 
     fixture = TestBed.createComponent(TestComponent);
@@ -26,10 +27,11 @@ describe('UppercaseDirective', () => {
     inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
   });
 
-  it('should convert input value to uppercase', () => {
+  it('should convert input value to uppercase', async () => {
     inputEl.value = 'batman';
     inputEl.dispatchEvent(new Event('input'));
     fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(fixture.componentInstance.control.value).toBe('BATMAN');
   });
