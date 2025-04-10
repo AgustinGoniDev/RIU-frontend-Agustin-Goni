@@ -59,3 +59,12 @@ Se desarrollaron pruebas para alcanzar una cobertura del 80%, validando tanto fu
 
 ### Dockerización
 Finalmente, se dockerizó la aplicación con `Docker` y `Docker Compose`, cumpliendo con uno de los requisitos principales del challenge.
+
+### Mejoras adicionales implementadas
+Además de los requerimientos del challenge, se implementaron funcionalidades extra para robustecer la aplicación:
+
+- **Login de usuario**: se desarrolló una vista de login con validación de credenciales básicas.
+- **Guards de autenticación**: se protegieron rutas sensibles mediante guards personalizados.
+- **Vista de tarjetas**: se agregó una alternativa visual a la tabla, mostrando los héroes en formato de tarjeta con diseño adaptable.
+
+Estas mejoras tienen como objetivo reforzar el enfoque profesional del proyecto, mostrando la capacidad de agregar valor más allá de los requisitos mínimos.
