@@ -1,25 +1,40 @@
-### STAGE 1: Build ###
+# Etapa de compilación
 FROM node:20-alpine AS build
-WORKDIR /usr/src/app
 
-# Instalamos pnpm globalmente
-RUN npm install -g pnpm
+# Instalar pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-COPY package.json pnpm-lock.yaml ./
+WORKDIR /app
+
+# Copiar archivos de configuración de pnpm
+COPY pnpm-lock.yaml package.json ./
+
+# Instalar dependencias
 RUN pnpm install --frozen-lockfile
 
+# Copiar el resto del código
 COPY . .
-RUN pnpm build:ssr
 
-### STAGE 2: Run ###
+# Construir la aplicación
+RUN pnpm run build
+
+# Etapa de ejecución
 FROM node:20-alpine
-WORKDIR /usr/src/app
 
-RUN npm install -g pnpm
+# Instalar pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-COPY --from=build /usr/src/app/dist /usr/src/app/dist
-COPY --from=build /usr/src/app/package.json /usr/src/app/pnpm-lock.yaml
+WORKDIR /app
+
+# Copiar los archivos necesarios de la etapa de compilación
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/package.json /app/pnpm-lock.yaml ./
+
+# Instalar solo las dependencias de producción
 RUN pnpm install --prod --frozen-lockfile
 
+# Exponer el puerto
 EXPOSE 4000
-CMD ["node", "dist/heroes-app/server/main.js"]
+
+# Comando para iniciar la aplicación
+CMD ["node", "dist/riu-frontend-challenge-agustin-goni/server/server.mjs"]

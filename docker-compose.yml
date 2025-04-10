@@ -1,14 +1,12 @@
 version: '3'
 
 services:
-  riu-frontend-challenge-agustin-goni:
+  heroes-app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: heroes-app
-    restart: unless-stopped
-    network_mode: bridge
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.heroes-app.rule=Host(`riu-frontend-challenge.agustin-goni.com`)"
-      - "traefik.http.services.heroes-app.loadbalancer.server.port=4000"
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000

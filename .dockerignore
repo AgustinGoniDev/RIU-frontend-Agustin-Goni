@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+pnpm-debug.log
+dist
+.git
+.github
+.vscode
+e2e
+coverage
+.angular
+.pnpm-store
