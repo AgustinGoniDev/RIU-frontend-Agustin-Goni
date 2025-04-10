@@ -6,7 +6,7 @@ import { HeroDetailListComponent } from './pages/hero-detail-list/hero-detail-li
 export const HEROES_ROUTES: Routes = [
   {
     path: '',
-    redirectTo: 'table-view',
+    redirectTo: 'heroes/table-view',
     pathMatch: 'full'
   },
   {

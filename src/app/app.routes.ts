@@ -1,14 +1,20 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './features/login/login/login.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'heroes/table-view',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'heroes',
-    loadChildren: () => import('./features/heroes/heroes.routes')
-      .then(m => m.HEROES_ROUTES)
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./features/home/home.component').then(c => c.HomeComponent),
+    loadChildren: () => import('./features/home/home.routes').then(r => r.HOME_ROUTES),
+    //canActivate: [authGuard]
   },
 ];
