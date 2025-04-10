@@ -8,6 +8,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { AsyncPipe } from '@angular/common';
 import { WINDOW } from '../../shared/utils/tokens.utils';
 import { SharedService } from '../../shared/services/shared.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -29,15 +30,14 @@ export class HomeComponent {
     private window = inject(WINDOW);
     private sharedSrv = inject(SharedService);
     private router = inject(Router);
+    private authService = inject(AuthService);
 
     sectionTitle$ = this.sharedSrv.title$;
+    userEmail = this.authService.getUser()?.email ?? '';
 
     @ViewChild('sidenav') sidenav!: MatSidenav;
     sidenavOpened = true;
 
-    constructor() {
-
-    }
 
     ngOnInit(): void {
       this.checkScreenSize();
@@ -58,8 +58,7 @@ export class HomeComponent {
     }
 
     logout(): void {
-      console.log('Logout clicked');
-      // this.authService.logout();
+      this.authService.logout();
       this.router.navigate(['/login']);
     }
 }
