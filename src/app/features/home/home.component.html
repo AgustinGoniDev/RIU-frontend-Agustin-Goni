@@ -19,7 +19,7 @@
 
       <div class="sidenav-list" [class.iconCentered]="!sidenavOpened">
         <a mat-list-item
-          routerLink="/table-view"
+          routerLink="heroes/table-view"
           routerLinkActive="active-link"
           [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon matTooltip="Lista de superhéroes" matListItemIcon>view_list</mat-icon>
@@ -28,7 +28,7 @@
           }
         </a>
         <a mat-list-item
-          routerLink="/heroes/card-view"
+          routerLink="heroes/card-view"
           routerLinkActive="active-link"
           [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon matTooltip="Vista en detalle" matListItemIcon>dashboard</mat-icon>

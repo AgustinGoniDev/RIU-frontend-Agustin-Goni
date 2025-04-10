@@ -12,7 +12,7 @@ import { HeroesService } from '../../../../core/services/heroes.service';
 import { Hero } from '../../../../core/models/hero.model';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
-import { NgFor } from '@angular/common';
+import { Location, NgFor } from '@angular/common';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { UpperCaseDirective } from '../../directives/upper-case.directive';
 
@@ -49,6 +49,7 @@ export class HeroFormComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
+  private location = inject(Location);
 
   constructor() {}
 
@@ -135,7 +136,7 @@ export class HeroFormComponent implements OnInit, OnDestroy {
       name: formValue.name,
       alterEgo: formValue.alterEgo,
       publisher: formValue.publisher,
-      imageUrl: formValue.imageUrl,
+      imageUrl: formValue.imageUrl || '../../../../../assets/avatar-blanco2.jpeg',
       abilities: this.abilities
     };
 
@@ -147,7 +148,7 @@ export class HeroFormComponent implements OnInit, OnDestroy {
           this.snackBar.open(`Superhéroe ${hero.name} actualizado con éxito`, 'Cerrar', {
             duration: 3000
           });
-          this.router.navigate(['/heroes']);
+          this.location.back();
         },
         error: (error) => {
           this.snackBar.open(`Error al actualizar superhéroe: ${error.message}`, 'Cerrar', {
@@ -163,7 +164,7 @@ export class HeroFormComponent implements OnInit, OnDestroy {
           this.snackBar.open(`Superhéroe ${hero.name} creado con éxito`, 'Cerrar', {
             duration: 3000
           });
-          this.router.navigate(['/heroes']);
+          this.location.back();
         },
         error: (error) => {
           this.snackBar.open(`Error al crear superhéroe: ${error.message}`, 'Cerrar', {
@@ -175,6 +176,6 @@ export class HeroFormComponent implements OnInit, OnDestroy {
   }
 
   cancel(): void {
-    this.router.navigate(['/heroes']);
+    this.location.back();
   }
 }

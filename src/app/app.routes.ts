@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './features/login/login/login.component';
 
 export const routes: Routes = [
   {
@@ -9,12 +8,21 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    loadComponent: () => import('./features/login/login/login.component').then(c => c.LoginComponent),
   },
   {
     path: 'home',
     loadComponent: () => import('./features/home/home.component').then(c => c.HomeComponent),
-    loadChildren: () => import('./features/home/home.routes').then(r => r.HOME_ROUTES),
-    //canActivate: [authGuard]
-  },
+    children: [
+      {
+        path: '',
+        redirectTo: 'heroes',
+        pathMatch: 'full'
+      },
+      {
+        path: 'heroes',
+        loadChildren: () => import('./features/heroes/heroes.routes').then(r => r.HEROES_ROUTES)
+      }
+    ],
+  }
 ];

@@ -6,7 +6,7 @@ import { HeroDetailListComponent } from './pages/hero-detail-list/hero-detail-li
 export const HEROES_ROUTES: Routes = [
   {
     path: '',
-    redirectTo: 'heroes/table-view',
+    redirectTo: 'table-view',
     pathMatch: 'full'
   },
   {
@@ -24,5 +24,5 @@ export const HEROES_ROUTES: Routes = [
   {
     path: 'edit/:id',
     component: HeroFormComponent
-  }
+  },
 ];

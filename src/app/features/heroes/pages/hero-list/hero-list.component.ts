@@ -115,11 +115,11 @@ export class HeroListComponent implements OnInit, OnDestroy {
   }
 
   addHero(): void {
-    this.router.navigate(['/heroes/new']);
+    this.router.navigate(['home/heroes/new']);
   }
 
   editHero(hero: Hero): void {
-    this.router.navigate(['/heroes/edit', hero.id]);
+    this.router.navigate(['home/heroes/edit', hero.id]);
   }
 
   deleteHero(hero: Hero): void {
