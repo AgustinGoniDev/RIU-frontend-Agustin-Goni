@@ -116,11 +116,13 @@ mat-card-actions {
   gap: 8px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 767px) {
+@media (max-width: 600px) {
   .header {
     flex-direction: column;
     align-items: flex-start;
+    .subheader{
+      flex-direction: column;
+    }
   }
 
   .actions-container {
@@ -131,6 +133,7 @@ mat-card-actions {
   .card-grid {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }
+
 }
 
 @media (max-width: 480px) {
