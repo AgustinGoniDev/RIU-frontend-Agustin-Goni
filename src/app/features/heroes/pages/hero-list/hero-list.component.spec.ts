@@ -84,7 +84,7 @@ describe('HeroListComponent', () => {
 
   it('debería navegar a crear héroe', () => {
     component.addHero();
-    expect(routerMock.navigate).toHaveBeenCalledWith(['/heroes/new']);
+    expect(routerMock.navigate).toHaveBeenCalledWith(['home/heroes/new']);
   });
 
   // it('debería eliminar héroe y mostrar snackbar', () => {
