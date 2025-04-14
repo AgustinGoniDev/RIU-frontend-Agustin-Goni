@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HeroDetailListComponent } from './hero-detail-list.component';
-import { provideRouter } from '@angular/router';
-import { of, throwError } from 'rxjs';
-import { HeroesService } from '../../../../core/services/heroes.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { provideRouter } from '@angular/router';
+import { of, throwError } from 'rxjs';
 import { Hero } from '../../../../core/models/hero.model';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HeroesService } from '../../../../core/services/heroes.service';
+import { HeroDetailListComponent } from './hero-detail-list.component';
 
 describe('HeroDetailListComponent', () => {
   let component: HeroDetailListComponent;
@@ -74,35 +73,6 @@ describe('HeroDetailListComponent', () => {
     expect(component.pageIndex()).toBe(1);
     expect(component.pageSize()).toBe(1);
   });
-
-  // it('debería eliminar un héroe tras confirmación', () => {
-  //   dialogMock.open.and.returnValue({
-  //     afterClosed: () => of(true)
-  //   } as any);
-
-  //   component.deleteHero(mockHeroes[0]);
-
-  //   expect(dialogMock.open).toHaveBeenCalled();
-  //   expect(heroServiceMock.deleteHero).toHaveBeenCalledWith('1');
-  //   expect(snackBarMock.open).toHaveBeenCalledWith(jasmine.stringContaining('eliminado'), 'Cerrar', jasmine.anything());
-  // });
-
-  // it('no debería eliminar si se cancela el diálogo', () => {
-  //   const hero: Hero = { id: '1', name: 'Batman', alterEgo: 'Bruce Wayne' };
-
-  //   // Mock que retorna `false` al cerrar diálogo (cancelado)
-  //   dialogMock.open.and.returnValue({
-  //     afterClosed: () => of(false),
-  //   } as any);
-
-  //   fixture = TestBed.createComponent(HeroDetailListComponent);
-  //   const component = fixture.componentInstance;
-  //   fixture.detectChanges();
-
-  //   component.deleteHero(hero);
-
-  //   expect(heroServiceMock.deleteHero).not.toHaveBeenCalled();
-  // });
 
   it('debería mostrar error si falla al cargar los héroes', () => {
     heroServiceMock.getHeroes.and.returnValue(throwError(() => new Error('Fallo de red')));

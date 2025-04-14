@@ -1,21 +1,21 @@
-import { Component, OnInit, OnDestroy, signal, inject, computed } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subject} from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
-import { HeroesService } from '../../../../core/services/heroes.service';
-import { Hero } from '../../../../core/models/hero.model';
-import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { DetailDialogComponent } from '../../components/detail-dialog/detail-dialog.component';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, startWith, takeUntil } from 'rxjs/operators';
+import { Hero } from '../../../../core/models/hero.model';
+import { HeroesService } from '../../../../core/services/heroes.service';
+import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { DetailDialogComponent } from '../../components/detail-dialog/detail-dialog.component';
 
 @Component({
   selector: 'app-hero-list',

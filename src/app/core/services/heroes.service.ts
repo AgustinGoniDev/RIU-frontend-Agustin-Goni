@@ -1,10 +1,10 @@
 
-import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
-import { Hero, HeroFilter } from '../models/hero.model';
+import { delay } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
+import { Hero } from '../models/hero.model';
 
 @Injectable({
   providedIn: 'root'

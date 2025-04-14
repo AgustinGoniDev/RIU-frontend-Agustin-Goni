@@ -1,7 +1,7 @@
 
-import { Component, inject, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmDialogData } from '../../utils/models.utils';
 
 @Component({

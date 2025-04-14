@@ -1,12 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HeroFormComponent } from './hero-form.component';
-import { provideRouter } from '@angular/router';
-import { of, Subject, throwError } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { HeroesService } from '../../../../core/services/heroes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of } from 'rxjs';
 import { Hero } from '../../../../core/models/hero.model';
+import { HeroesService } from '../../../../core/services/heroes.service';
+import { HeroFormComponent } from './hero-form.component';
 
 describe('HeroFormComponent', () => {
   let component: HeroFormComponent;

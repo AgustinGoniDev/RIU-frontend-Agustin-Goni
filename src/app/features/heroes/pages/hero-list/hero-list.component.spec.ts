@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroListComponent } from './hero-list.component';
-import { provideRouter, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { HeroesService } from '../../../../core/services/heroes.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -86,16 +86,4 @@ describe('HeroListComponent', () => {
     component.addHero();
     expect(routerMock.navigate).toHaveBeenCalledWith(['home/heroes/new']);
   });
-
-  // it('debería eliminar héroe y mostrar snackbar', () => {
-  //   component.deleteHero(mockHeroes[0]);
-
-  //   expect(matDialogSpy.open).toHaveBeenCalled();
-  //   expect(heroesServiceSpy.deleteHero).toHaveBeenCalledWith('1');
-  //   expect(snackBarSpy.open).toHaveBeenCalledWith(
-  //     'Superhéroe Superman eliminado con éxito',
-  //     'Cerrar',
-  //     { duration: 3000 }
-  //   );
-  // });
 });
