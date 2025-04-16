@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
 export class AuthService {
 
   private localStorageSrv = inject(LocalStorageService);
+  private router = inject(Router);
 
   private readonly USER_KEY = 'user';
 
@@ -17,6 +19,7 @@ export class AuthService {
 
   logout(): void {
     this.localStorageSrv.removeItem(this.USER_KEY);
+    this.router.navigate(['/login']);
   }
 
   getUser(): { email: string } | null {

@@ -1,14 +1,17 @@
-import { Component, inject, ViewChild } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
-import { MatIcon } from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
 import { AsyncPipe } from '@angular/common';
-import { WINDOW } from '../../shared/utils/tokens.utils';
-import { SharedService } from '../../shared/services/shared.service';
+import { Component, inject, ViewChild } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { SharedService } from '../../shared/services/shared.service';
+import { WINDOW } from '../../shared/utils/tokens.utils';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -29,10 +32,11 @@ import { AuthService } from '../../core/services/auth.service';
 export class HomeComponent {
     private window = inject(WINDOW);
     private sharedSrv = inject(SharedService);
-    private router = inject(Router);
     private authService = inject(AuthService);
+    private dialog = inject(MatDialog);
 
     sectionTitle$ = this.sharedSrv.title$;
+    private destroy$ = new Subject<void>();
     userEmail = this.authService.getUser()?.email ?? '';
 
     @ViewChild('sidenav') sidenav!: MatSidenav;
@@ -58,7 +62,22 @@ export class HomeComponent {
     }
 
     logout(): void {
-      this.authService.logout();
-      this.router.navigate(['/login']);
-    }
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '350px',
+          data: {
+            title: 'Cerrar sesión',
+            message: `¿Estás seguro que deseas cerrar sesión?`,
+            confirmText: 'Cerrar',
+            cancelText: 'Cancelar'
+          }
+        });
+
+        dialogRef.afterClosed().pipe(
+          takeUntil(this.destroy$)
+        ).subscribe(result => {
+          if (result) {
+            this.authService.logout();
+          }
+        });
+      }
 }
