@@ -13,7 +13,7 @@ import { Hero } from '../../../../core/models/hero.model';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { Location, NgFor } from '@angular/common';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { UpperCaseDirective } from '../../directives/upper-case.directive';
 
 @Component({
@@ -38,7 +38,7 @@ export class HeroFormComponent implements OnInit, OnDestroy {
   isEditMode = false;
   heroId = '';
   abilities: string[] = [];
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  readonly separatorKeysCodes = [ENTER, COMMA, SPACE] as const;
 
 
   private destroy$ = new Subject<void>();
