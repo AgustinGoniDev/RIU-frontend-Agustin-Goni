@@ -22,7 +22,7 @@ describe('authGuard', () => {
     });
   });
 
-  it('should allow access if user is logged in', () => {
+  it('Debería permitir el acceso si el usuario está logueado', () => {
     authServiceSpy.isLoggedIn.and.returnValue(true);
 
     const result = TestBed.runInInjectionContext(() => authGuard(mockRoute, mockState));
@@ -30,7 +30,7 @@ describe('authGuard', () => {
     expect(routerSpy.navigate).not.toHaveBeenCalled();
   });
 
-  it('should deny access and redirect to login if user is not logged in', () => {
+  it('Debería denegar el acceso y redirigir al login si el usuario no está logueado', () => {
     authServiceSpy.isLoggedIn.and.returnValue(false);
 
     const result = TestBed.runInInjectionContext(() => authGuard(mockRoute, mockState));

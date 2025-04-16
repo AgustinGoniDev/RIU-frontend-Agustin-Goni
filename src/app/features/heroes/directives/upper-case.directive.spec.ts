@@ -27,7 +27,7 @@ describe('UppercaseDirective', () => {
     inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
   });
 
-  it('should convert input value to uppercase', async () => {
+  it('Debería convertir el valor del input a mayúsculas', async () => {
     inputEl.value = 'batman';
     inputEl.dispatchEvent(new Event('input'));
     fixture.detectChanges();
@@ -36,7 +36,7 @@ describe('UppercaseDirective', () => {
     expect(fixture.componentInstance.control.value).toBe('BATMAN');
   });
 
-  it('should not throw if no control is found', () => {
+  it('No debería lanzar una excepción si no se encuentra un control.', () => {
     expect(() => {
       inputEl.dispatchEvent(new Event('input'));
     }).not.toThrow();

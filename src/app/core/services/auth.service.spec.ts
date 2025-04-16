@@ -23,38 +23,38 @@ describe('AuthService', () => {
     localStorageServiceSpy = TestBed.inject(LocalStorageService) as jasmine.SpyObj<LocalStorageService>;
   });
 
-  it('should be created', () => {
+  it('Deberia ser creado', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should store user on login', () => {
+  it('Debería guardar al usuario al iniciar sesión', () => {
     service.login(mockUser.email);
     expect(localStorageServiceSpy.setItem).toHaveBeenCalledWith(userKey, JSON.stringify(mockUser));
   });
 
-  it('should remove user on logout', () => {
+  it('Debería eliminar al usuario al cerrar sesión', () => {
     service.logout();
     expect(localStorageServiceSpy.removeItem).toHaveBeenCalledWith(userKey);
   });
 
-  it('should return user if stored', () => {
+  it('Debería devolver al usuario si está guardado', () => {
     localStorageServiceSpy.getItem.and.returnValue(JSON.stringify(mockUser));
     const user = service.getUser();
     expect(user).toEqual(mockUser);
   });
 
-  it('should return null if no user stored', () => {
+  it('Debería devolver null si no hay usuario guardado', () => {
     localStorageServiceSpy.getItem.and.returnValue(null);
     const user = service.getUser();
     expect(user).toBeNull();
   });
 
-  it('should return true if user is logged in', () => {
+  it('Debería devolver true si el usuario está logueado.', () => {
     localStorageServiceSpy.getItem.and.returnValue(JSON.stringify(mockUser));
     expect(service.isLoggedIn()).toBeTrue();
   });
 
-  it('should return false if user is not logged in', () => {
+  it('Debería devolver false si el usuario no está logueado', () => {
     localStorageServiceSpy.getItem.and.returnValue(null);
     expect(service.isLoggedIn()).toBeFalse();
   });

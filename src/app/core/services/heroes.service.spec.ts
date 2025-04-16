@@ -21,18 +21,18 @@ describe('HeroesService', () => {
     };
   });
 
-  it('should be created', () => {
+  it('Deberia ser creado', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get all heroes', (done) => {
+  it('Debería obtener todos los héroes', (done) => {
     service.getHeroes().subscribe(heroes => {
       expect(heroes.length).toBeGreaterThan(0);
       done();
     });
   });
 
-  it('should create a hero', (done) => {
+  it('Debería crear un héroe', (done) => {
     const heroToCreate = {
       name: 'New Hero',
       alterEgo: 'New Alter Ego',
@@ -54,7 +54,7 @@ describe('HeroesService', () => {
     });
   });
 
-  it('should get a hero by id', (done) => {
+  it('Debería obtener un héroe por su ID.', (done) => {
     service.createHero({
       name: mockHero.name,
       alterEgo: mockHero.alterEgo,
@@ -71,7 +71,7 @@ describe('HeroesService', () => {
     });
   });
 
-  it('should update a hero', (done) => {
+  it('Debería actualizar un héroe', (done) => {
     service.createHero({
       name: mockHero.name,
       alterEgo: mockHero.alterEgo,
@@ -92,7 +92,7 @@ describe('HeroesService', () => {
     });
   });
 
-  it('should delete a hero', (done) => {
+  it('Debería eliminar un héroe.', (done) => {
     service.createHero({
       name: mockHero.name,
       alterEgo: mockHero.alterEgo,
@@ -105,7 +105,7 @@ describe('HeroesService', () => {
 
         service.getHeroById(createdHero.id).subscribe({
           next: () => {
-            fail('Hero should not exist');
+            fail('El héroe no debería existir');
           },
           error: (error) => {
             expect(error).toBeDefined();
