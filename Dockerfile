@@ -1,27 +1,24 @@
+# Etapa 1: Build
 FROM node:20-alpine AS build
-
-RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-COPY pnpm-lock.yaml package.json ./
-
-RUN pnpm install --frozen-lockfile
+COPY package.json package-lock.json ./
+RUN npm ci
 
 COPY . .
 
-RUN pnpm run build
+RUN npm run build
 
+# Etapa 2: Runtime
 FROM node:20-alpine
-
-RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/package.json /app/pnpm-lock.yaml ./
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 
-RUN pnpm install --prod --frozen-lockfile
+COPY --from=build /app/dist ./dist
 
 EXPOSE 4000
 
